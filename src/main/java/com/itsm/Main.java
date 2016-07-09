@@ -23,7 +23,7 @@ import java.util.Map;
 public class Main {
 
     private static Logger logger = LoggerFactory.getLogger(Main.class);
-
+    private static final String PACKAGE = "com.itsm.platform.account.";
     public static void main(String[] args){
         Entity entity = new Entity();
         entity.setTableName("t_um_user");
@@ -34,14 +34,14 @@ public class Main {
 
         //生成entity
         generateEntity(entity);
-//
-//        //xml
-//        updateXml(entity);
+
+        //xml
+        updateXml(entity);
     }
 
     private static void updateXml(Entity entity) {
-        String serviceXml = Entity.OUT_PATH + "fionapet-business-service-provider/src/main/resources/META-INF/spring/dubbo-business-service-provider-itsm.xml";
-        String restXml = Entity.OUT_PATH + "fionapet-business-rest-provider/src/main/resources/META-INF/spring/dubbo-business-rest-provider-itsm.xml";
+        String serviceXml = Entity.OUT_PATH + "itsm-account-service-provider/src/main/resources/META-INF/spring/dubbo-account-service-provider.xml";
+        String restXml = Entity.OUT_PATH + "itsm-account-rest-provider/src/main/resources/META-INF/spring/dubbo-account-rest-provider.xml";
 
         try {
             List<String> serviceXmlList  = FileUtils.readLines(new File(serviceXml));
@@ -58,22 +58,22 @@ public class Main {
 
     private static String getRestXml(Entity entity) {
         return "\n\t<!--"+entity.getEntityName()+" api -->\n" +
-                "    <dubbo:service interface=\"com.fionapet.business.facade."+entity.getEntityClassName()+"RestService\" ref=\""+entity.getFieldClassName()+"RestService\"\n" +
+                "    <dubbo:service interface=\""+PACKAGE+".facade."+entity.getEntityClassName()+"RestService\" ref=\""+entity.getFieldClassName()+"RestService\"\n" +
                 "                   protocol=\"rest\" validation=\"true\" timeout=\"2000\" connections=\"100\"/>\n" +
                 "\n" +
-                "    <bean id=\""+entity.getFieldClassName()+"RestService\" class=\"com.fionapet.business.facade."+entity.getEntityClassName()+"RestServiceImpl\">\n" +
+                "    <bean id=\""+entity.getFieldClassName()+"RestService\" class=\""+PACKAGE+"facade."+entity.getEntityClassName()+"RestServiceImpl\">\n" +
                 "        <property name=\""+entity.getFieldClassName()+"Service\" ref=\""+entity.getFieldClassName()+"Service\"/>\n" +
                 "    </bean>\n" +
                 "\n" +
-                "    <dubbo:reference id=\""+entity.getFieldClassName()+"Service\" interface=\"com.fionapet.business.service."+entity.getEntityClassName()+"Service\"/>\n" +
+                "    <dubbo:reference id=\""+entity.getFieldClassName()+"Service\" interface=\""+PACKAGE+".service."+entity.getEntityClassName()+"Service\"/>\n" +
                 "    <!--"+entity.getEntityName()+" api -->\n";
     }
 
     private static String getServiceXml(Entity entity) {
         return "\n\t<!-- "+entity.getEntityName()+" api -->\n" +
-                "    <bean id=\""+entity.getFieldClassName()+"Service\" class=\"com.fionapet.business.service."+entity.getEntityClassName()+"ServiceImpl\"/>\n" +
+                "    <bean id=\""+entity.getFieldClassName()+"Service\" class=\""+PACKAGE+"service."+entity.getEntityClassName()+"ServiceImpl\"/>\n" +
                 "\n" +
-                "    <dubbo:service interface=\"com.fionapet.business.service."+entity.getEntityClassName()+"Service\" ref=\""+entity.getFieldClassName()+"Service\"\n" +
+                "    <dubbo:service interface=\""+PACKAGE+"service."+entity.getEntityClassName()+"Service\" ref=\""+entity.getFieldClassName()+"Service\"\n" +
                 "                   protocol=\"dubbo\" validation=\"true\" timeout=\"2000\" connections=\"100\"/>\n" +
                 "    <!-- "+entity.getEntityName()+" api -->\n";
     }
