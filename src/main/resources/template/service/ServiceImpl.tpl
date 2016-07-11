@@ -1,8 +1,9 @@
-package com.itsm.platform.account.service;
+package <#$package#>service;
 
-import com.itsm.platform.account.entity.<#$entity.entityClassName#>;
-import com.itsm.platform.account.repository.DaoBase;
-import com.itsm.platform.account.repository.<#$entity.entityClassName#>Dao;
+import <#$package#>entity.<#$entity.entityClassName#>;
+import org.dubbo.x.repository.DaoBase;
+import org.dubbo.x.service.CURDServiceBase;
+import <#$package#>repository.<#$entity.entityClassName#>Dao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

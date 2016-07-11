@@ -22,8 +22,10 @@ import java.util.Map;
  */
 public class Main {
 
+    public static final String PACKAGE_PATH = "/com/itsm/platform/account/";
     private static Logger logger = LoggerFactory.getLogger(Main.class);
     private static final String PACKAGE = "com.itsm.platform.account.";
+    public static final String ARTIFACT_ID = "itsm-account-";
     public static void main(String[] args){
         Entity entity = new Entity();
         entity.setTableName("t_um_user");
@@ -40,25 +42,68 @@ public class Main {
     }
 
     private static void updateXml(Entity entity) {
-        String serviceXml = Entity.OUT_PATH + "itsm-account-service-provider/src/main/resources/META-INF/spring/dubbo-account-service-provider.xml";
-        String restXml = Entity.OUT_PATH + "itsm-account-rest-provider/src/main/resources/META-INF/spring/dubbo-account-rest-provider.xml";
+        String serviceXml = Entity.OUT_PATH + ARTIFACT_ID +"service-provider/src/main/resources/META-INF/spring/"+ARTIFACT_ID +"service-provider.xml";
+        String restXml = Entity.OUT_PATH + ARTIFACT_ID +"rest-provider/src/main/resources/META-INF/spring/"+ARTIFACT_ID +"rest-provider.xml";
+        String consumerXml = Entity.OUT_PATH + ARTIFACT_ID +"consumer/src/main/resources/META-INF/spring/"+ARTIFACT_ID +"consumer.xml";
+        String actionXml = Entity.OUT_PATH + ARTIFACT_ID +"consumer/src/main/resources/META-INF/spring/"+ARTIFACT_ID +"action.xml";
 
         try {
-            List<String> serviceXmlList  = FileUtils.readLines(new File(serviceXml));
-            serviceXmlList.add(serviceXmlList.size()-1, getServiceXml(entity));
-            FileUtils.writeLines(new File(serviceXml), serviceXmlList);
+            List<String> serviceXmlList = FileUtils.readLines(new File(serviceXml));
+            if (!isExist(serviceXmlList,"id=\"" + entity.getFieldClassName() + "Service\"")) {
+                serviceXmlList.add(serviceXmlList.size() - 1, getServiceXml(entity));
+                FileUtils.writeLines(new File(serviceXml), serviceXmlList);
+            }
+
+            List<String> consumerXmlList = FileUtils.readLines(new File(consumerXml));
+            if (!isExist(consumerXmlList,"id=\"" + entity.getFieldClassName() + "Service\"")) {
+                consumerXmlList.add(consumerXmlList.size() - 1, getConsumerXml(entity));
+                FileUtils.writeLines(new File(consumerXml), consumerXmlList);
+            }
+
+
+            List<String> actionXmlList = FileUtils.readLines(new File(actionXml));
+            if (!isExist(consumerXmlList,"class=\""+PACKAGE+"consumer."+entity.getEntityClassName()+"DemoAction\"")) {
+                actionXmlList.add(actionXmlList.size() - 1, getActionXml(entity));
+                FileUtils.writeLines(new File(actionXml), actionXmlList);
+            }
 
             List<String> restXmlList  = FileUtils.readLines(new File(restXml));
-            restXmlList.add(restXmlList.size()-1, getRestXml(entity));
-            FileUtils.writeLines(new File(restXml), restXmlList);
+            if (!isExist(restXmlList,"id=\"" + entity.getFieldClassName() + "RestService\"")) {
+                restXmlList.add(restXmlList.size() - 1, getRestXml(entity));
+                FileUtils.writeLines(new File(restXml), restXmlList);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private static String getActionXml(Entity entity) {
+        return "\n\t<!-- "+entity.getEntityName()+" action -->\n" +
+                "    <bean class=\""+PACKAGE+"consumer."+entity.getEntityClassName()+"DemoAction\" init-method=\"start\">\n" +
+                "        <property name=\""+entity.getFieldClassName()+"Service\" ref=\""+entity.getFieldClassName()+"Service\"/>\n" +
+                "    </bean>\n" +
+                "    <!-- "+entity.getEntityName()+" action -->\n";
+    }
+
+    private static String getConsumerXml(Entity entity) {
+        return "\n\t<!-- "+entity.getEntityName()+" service -->\n" +
+                "    <dubbo:reference id=\""+entity.getFieldClassName()+"Service\" interface=\""+PACKAGE+"service."+entity.getEntityClassName()+"Service\"/>\n" +
+                "    <!-- "+entity.getEntityName()+" service -->\n";
+    }
+
+    private static boolean isExist(List<String> serviceXmlList, String text) {
+        for (String line:serviceXmlList){
+            if (line.indexOf(text)>-1){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static String getRestXml(Entity entity) {
         return "\n\t<!--"+entity.getEntityName()+" api -->\n" +
-                "    <dubbo:service interface=\""+PACKAGE+".facade."+entity.getEntityClassName()+"RestService\" ref=\""+entity.getFieldClassName()+"RestService\"\n" +
+                "    <dubbo:service interface=\""+PACKAGE+"facade."+entity.getEntityClassName()+"RestService\" ref=\""+entity.getFieldClassName()+"RestService\"\n" +
                 "                   protocol=\"rest\" validation=\"true\" timeout=\"2000\" connections=\"100\"/>\n" +
                 "\n" +
                 "    <bean id=\""+entity.getFieldClassName()+"RestService\" class=\""+PACKAGE+"facade."+entity.getEntityClassName()+"RestServiceImpl\">\n" +
@@ -85,9 +130,12 @@ public class Main {
             File outEntityFile = new File(entity.OUT_API_PATH + File.separatorChar + "entity" + File.separatorChar + entity.getEntityClassName() + ".java");
             File outFacadeFile = new File(entity.OUT_API_PATH + File.separatorChar + "facade" + File.separatorChar + entity.getEntityClassName() + "RestService.java");
             File outServiceFile = new File(entity.OUT_API_PATH + File.separatorChar + "service" + File.separatorChar + entity.getEntityClassName() + "Service.java");
+            File outConsumerServiceFile = new File(entity.OUT_CONSUMER_PATH + File.separatorChar + "consumer" + File.separatorChar + entity.getEntityClassName() + "DemoAction.java");
             File outDaoFile = new File(entity.OUT_SERVICE_PATH + File.separatorChar + "repository" + File.separatorChar + entity.getEntityClassName() + "Dao.java");
+            File outTestDaoFile = new File(entity.OUT_TEST_DAO_PATH + File.separatorChar + "repository" + File.separatorChar + "Test" + entity.getEntityClassName() + "Dao.java");
             File outServiceImplFile = new File(entity.OUT_SERVICE_PATH + File.separatorChar + "service" + File.separatorChar + entity.getEntityClassName() + "ServiceImpl.java");
             File outRestFile = new File(entity.OUT_REST_PATH + File.separatorChar + "facade" + File.separatorChar + entity.getEntityClassName() + "RestServiceImpl.java");
+            File outRestClientFile = new File(entity.OUT_REST_CLIENT_PATH + File.separatorChar + "restclient"+ File.separatorChar + entity.getEntityClassName() + "RestClient.java");
 
             if (!outEntityFile.exists()) {
                 fileOutputStream = new FileOutputStream(outEntityFile);
@@ -125,6 +173,22 @@ public class Main {
                 logger.info("api template render:{}", outRestFile);
             }
 
+            if (!outTestDaoFile.exists()) {
+                fileOutputStream = new FileOutputStream(outTestDaoFile);
+                renderTemplate(entity, "test/repository/TestDao.tpl", fileOutputStream);
+                logger.info("test dao template render:{}", outTestDaoFile);
+            }
+
+            if (!outConsumerServiceFile.exists()) {
+                fileOutputStream = new FileOutputStream(outConsumerServiceFile);
+                renderTemplate(entity, "consumer/DemoAction.tpl", fileOutputStream);
+                logger.info("consumer service template render:{}", outConsumerServiceFile);
+            }
+            if (!outRestClientFile.exists()) {
+                fileOutputStream = new FileOutputStream(outRestClientFile);
+                renderTemplate(entity, "consumer/RestClient.tpl", fileOutputStream);
+                logger.info("rest client template render:{}", outRestClientFile);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,6 +211,7 @@ public class Main {
 
         Context context = new Context();
         context.set("entity", entity);
+        context.set("package", PACKAGE);
         template.merge(context, fileOutputStream);
 
         return template;

@@ -1,7 +1,7 @@
-package com.itsm.platform.account.service;
+package <#$package#>service;
 
-import com.itsm.platform.account.entity.<#$entity.entityClassName#>;
-
+import <#$package#>entity.<#$entity.entityClassName#>;
+import org.dubbo.x.service.CURDService;
 /**
  * <#$entity.entityName#>
  * @author baiqw

@@ -1,6 +1,7 @@
-package com.itsm.platform.account.repository;
+package <#$package#>repository;
 
-import com.itsm.platform.account.entity.<#$entity.entityClassName#>;
+import <#$package#>entity.<#$entity.entityClassName#>;
+import org.dubbo.x.repository.DaoBase;
 
 /**
  * <#$entity.entityName#>

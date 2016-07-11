@@ -1,7 +1,8 @@
-package com.itsm.platform.account.entity;
+package <#$package#>entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.dubbo.x.entity.StatusEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import java.util.Date;
 @Entity
 @Table(name = "<#$entity.tableName#>")
 @ApiModel("<#$entity.entityName#>")
-public class <#$entity.entityClassName#> extends CMSEntity {
+public class <#$entity.entityClassName#> extends StatusEntity {
     <#foreach from=$entity.fields item=field#>
     /**
      * <#$field.desc#>

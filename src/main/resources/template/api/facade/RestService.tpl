@@ -1,9 +1,10 @@
-package com.itsm.platform.account.facade;
+package <#$package#>facade;
 
-import com.itsm.platform.account.facade.AuthRestService;
-import com.itsm.platform.account.facade.RestResult;
+import org.dubbo.x.facade.CURDRestService;
+import org.dubbo.x.facade.RestResult;
+import org.dubbo.x.util.ConstantVariable;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
-import com.itsm.platform.account.entity.<#$entity.entityClassName#>;
+import <#$package#>entity.<#$entity.entityClassName#>;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,7 +32,7 @@ public interface <#$entity.entityClassName#>RestService extends CURDRestService<
     @Path("")
     @ApiOperation(value = "<#$entity.entityName#>",
             notes = "<#$entity.entityName#>列表.")
-    RestResult<List<<#$entity.entityClassName#>>> list(@HeaderParam(AuthRestService.HEADER_AUTHORIZATION_KEY) String token);
+    RestResult<List<<#$entity.entityClassName#>>> list(@HeaderParam(ConstantVariable.HEADER_AUTHORIZATION_KEY) String token);
 
     /**
      * <#$entity.entityName#> 详细信息
@@ -42,15 +43,15 @@ public interface <#$entity.entityClassName#>RestService extends CURDRestService<
     @Path("/{id}")
     @ApiOperation(value = "详细信息",
             notes = "<#$entity.entityName#>详细信息.")
-    RestResult<<#$entity.entityClassName#>> detail(@HeaderParam(AuthRestService.HEADER_AUTHORIZATION_KEY) String token, @ApiParam("id") @PathParam("id") String uuid);
+    RestResult<<#$entity.entityClassName#>> detail(@HeaderParam(ConstantVariable.HEADER_AUTHORIZATION_KEY) String token, @ApiParam("id") @PathParam("id") String uuid);
 
     @POST
     @Path("")
     @ApiOperation(value = "添加/修改<#$entity.entityName#>", notes = "添加/修改<#$entity.entityName#>")
-    RestResult<<#$entity.entityClassName#>> create(@HeaderParam(AuthRestService.HEADER_AUTHORIZATION_KEY) String token,<#$entity.entityClassName#> <#$entity.fieldClassName#>);
+    RestResult<<#$entity.entityClassName#>> create(@HeaderParam(ConstantVariable.HEADER_AUTHORIZATION_KEY) String token,<#$entity.entityClassName#> <#$entity.fieldClassName#>);
 
     @DELETE
     @Path("/{id}")
     @ApiOperation(value = "删除<#$entity.entityName#>", notes = "删除<#$entity.entityName#>")
-    RestResult<String> delete(@HeaderParam(AuthRestService.HEADER_AUTHORIZATION_KEY) String token, @ApiParam("id") @PathParam("id") String uuid);
+    RestResult<String> delete(@HeaderParam(ConstantVariable.HEADER_AUTHORIZATION_KEY) String token, @ApiParam("id") @PathParam("id") String uuid);
 }

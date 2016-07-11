@@ -1,5 +1,6 @@
 package com.itsm.entity;
 
+import com.itsm.Main;
 import com.itsm.util.Utils;
 
 import java.util.List;
@@ -9,11 +10,16 @@ import java.util.List;
  */
 public class Entity {
     public static final String OUT_PATH = "/work/001_code/github/java/itsm-platform/itsm-account/";
-    public static final String OUT_API_PATH = OUT_PATH + "itsm-account-api/src/main/java/com/itsm/platform/account/";
-    public static final String OUT_REST_PATH = OUT_PATH + "itsm-account-rest-provider/src/main/java/com/itsm/platform/account/";
-    public static final String OUT_SERVICE_PATH = OUT_PATH + "itsm-account-service-provider/src/main/java/com/itsm/platform/account/";
+    public static final String OUT_API_PATH = OUT_PATH + Main.ARTIFACT_ID + "api/src/main/java" + Main.PACKAGE_PATH;
+    public static final String OUT_REST_PATH = OUT_PATH + Main.ARTIFACT_ID + "rest-provider/src/main/java" + Main.PACKAGE_PATH;
+    public static final String OUT_SERVICE_PATH = OUT_PATH + Main.ARTIFACT_ID + "service-provider/src/main/java" + Main.PACKAGE_PATH;
+    public static final String OUT_TEST_DAO_PATH = OUT_PATH + Main.ARTIFACT_ID + "service-provider/src/test/java" + Main.PACKAGE_PATH;
+    public static final String OUT_CONSUMER_PATH = OUT_PATH + Main.ARTIFACT_ID + "consumer/src/main/java" + Main.PACKAGE_PATH;
+    public static final String OUT_REST_CLIENT_PATH = OUT_PATH + Main.ARTIFACT_ID + "consumer/src/test/java" + Main.PACKAGE_PATH;
 
     public static final String[] FILTER_FIELD = new String[]{"id","status"};
+
+
     private String entityName;
     private String entityClassName;
     private String tableName;
