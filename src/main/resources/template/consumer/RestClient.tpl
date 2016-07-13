@@ -34,9 +34,9 @@ public class <#$entity.entityClassName#>RestClient extends RestClientTestCase {
 
                 Assert.assertNotNull(result.getData());
 
-                Assert.assertEquals(result.getData().size(), 1);
+                Assert.assertEquals(result.getData().size(), 0);
 
-                LOGGER.info("pet race list:{}", JSON.toJSON(restResult));
+                LOGGER.info("<#$entity.entityClassName#> list:{}", JSON.toJSON(restResult));
             }
         }, URL, <#$entity.entityClassName#>RestClient.TOKEN);
     }
