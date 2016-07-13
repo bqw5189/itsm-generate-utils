@@ -62,7 +62,7 @@ public abstract class JdbcUtils {
         resultSet = pstmt.executeQuery();
 
         while (resultSet.next()) {
-            Field field = toField(resultSet);
+            Field field = toField(resultSet, tableName);
 
             if (!isFilterField(field.getName())) {
                 list.add(field);
@@ -74,7 +74,7 @@ public abstract class JdbcUtils {
 
     protected abstract String getDescSql(String tableName);
 
-    protected abstract Field toField(ResultSet resultSet);
+    protected abstract Field toField(ResultSet resultSet, String tableName);
 
     public  String toJavaType(String type) {
         if (StringUtils.indexOf(type,"timestamp") > -1){

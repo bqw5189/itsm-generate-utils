@@ -42,7 +42,7 @@ public class PostgreJdbcUtils extends JdbcUtils{
         return "select * from table_msg('public','"+tableName+"')";
     }
 
-    protected Field toField(ResultSet resultSet) {
+    protected Field toField(ResultSet resultSet, String tableName) {
         Field field = new Field();
         try {
             field.setName(resultSet.getString("fields_name"));
