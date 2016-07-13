@@ -175,7 +175,7 @@ public abstract class AbstractGenerate {
                 "        <property name=\"" + entity.getFieldClassName() + "Service\" ref=\"" + entity.getFieldClassName() + "Service\"/>\n" +
                 "    </bean>\n" +
                 "\n" +
-                "    <dubbo:reference id=\"" + entity.getFieldClassName() + "Service\" interface=\"" + getPackage() + ".service." + entity.getEntityClassName() + "Service\"/>\n" +
+                "    <dubbo:reference id=\"" + entity.getFieldClassName() + "Service\" interface=\"" + getPackage() + "service." + entity.getEntityClassName() + "Service\"/>\n" +
                 "    <!--" + entity.getEntityName() + " api -->\n";
     }
 

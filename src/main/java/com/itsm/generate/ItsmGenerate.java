@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class ItsmGenerate extends AbstractGenerate{
     public String getOutPath() {
-        return "/work/001_code/github/java/itsm-platform/itsm-account";
+        return "/work/001_code/github/java/itsm-platform/itsm-account/";
     }
 
     public String getPackagePath() {
@@ -30,6 +30,7 @@ public class ItsmGenerate extends AbstractGenerate{
     public Map<String, String> tableAndDescs() {
         Map<String, String> tableAndDescs = new HashMap<String, String>();
         tableAndDescs.put("t_um_function", "功能表");
+        tableAndDescs.put("t_um_role", "角色表");
         return tableAndDescs;
     }
 
