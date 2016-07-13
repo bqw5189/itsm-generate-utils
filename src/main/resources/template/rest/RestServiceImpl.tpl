@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * <#$entity.entityName#>
- * User: baiqw
- * Date: 14-12-9
- * Time: 下午3:45
+* Created by <#$auth#> on <#$date#>.
  */
 public class <#$entity.entityClassName#>RestServiceImpl extends RestServiceBase<<#$entity.entityClassName#>> implements <#$entity.entityClassName#>RestService {
 

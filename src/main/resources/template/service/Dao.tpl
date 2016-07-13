@@ -5,7 +5,7 @@ import org.dubbo.x.repository.DaoBase;
 
 /**
  * <#$entity.entityName#>
- * @author baiqw
+* Created by <#$auth#> on <#$date#>.
  **/
 public interface <#$entity.entityClassName#>Dao extends DaoBase<<#$entity.entityClassName#>> {
 }

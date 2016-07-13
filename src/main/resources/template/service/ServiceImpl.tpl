@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *  <#$entity.entityName#>
- * @author baiqw
+* Created by <#$auth#> on <#$date#>.
  */
 public class <#$entity.entityClassName#>ServiceImpl extends CURDServiceBase<<#$entity.entityClassName#>> implements <#$entity.entityClassName#>Service {
     @Autowired

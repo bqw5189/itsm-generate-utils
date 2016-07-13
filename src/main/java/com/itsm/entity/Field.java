@@ -21,7 +21,7 @@ public class Field {
     }
 
     public String getType() {
-        return Utils.toJavaType(type);
+        return type;
     }
 
     public void setType(String type) {

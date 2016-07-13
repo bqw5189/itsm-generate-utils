@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * <#$entity.entityName#> 接口
  *
- * @author baiqw
+* Created by <#$auth#> on <#$date#>.
  */
 
 @Path("<#$entity.path#>")

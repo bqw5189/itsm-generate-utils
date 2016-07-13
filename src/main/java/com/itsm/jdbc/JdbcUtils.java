@@ -1,24 +1,25 @@
 package com.itsm.jdbc;
 
 import com.itsm.entity.Field;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by itsm on 16/7/2.
  */
-public class JdbcUtils {
-    //数据库用户名
-    private static final String USERNAME = "postgres";
-    //数据库密码
-    private static final String PASSWORD = "postgres";
-    //驱动信息
-    private static final String DRIVER = "org.postgresql.Driver";
-    //数据库地址
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-    private static final char UNDERLINE = '_';
+public abstract class JdbcUtils {
+    public abstract String getDriver();
+    public abstract String getUserName();
+    public abstract String getPassword();
+    public abstract String getUrl();
+
+
+    public static final char UNDERLINE = '_';
 
     private Connection connection;
 
@@ -29,7 +30,7 @@ public class JdbcUtils {
     public JdbcUtils() {
         // TODO Auto-generated constructor stub
         try {
-            Class.forName(DRIVER);
+            Class.forName(getDriver());
             System.out.println("数据库连接成功！");
 
         } catch (Exception e) {
@@ -46,51 +47,52 @@ public class JdbcUtils {
      */
     public Connection getConnection() {
         try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(getUrl(), getUserName(), getPassword());
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return connection;
     }
 
-
     public List<Field> desc(String tableName) throws SQLException {
         List<Field> list = new ArrayList<Field>();
 
-        pstmt = connection.prepareStatement("select * from table_msg('public','"+tableName+"')");
+        pstmt = connection.prepareStatement(getDescSql(tableName));
 
         resultSet = pstmt.executeQuery();
 
         while (resultSet.next()) {
-            Field field = new Field();
-            field.setName(resultSet.getString("fields_name"));
-            field.setType(resultSet.getString("fields_type"));
-            field.setIsNull(resultSet.getString("fields_not_null"));
-            field.setDesc(resultSet.getString("fields_comment"));
-            list.add(field);
+            Field field = toField(resultSet);
+
+            if (!isFilterField(field.getName())) {
+                list.add(field);
+            }
         }
 
         return list;
     }
 
+    protected abstract String getDescSql(String tableName);
 
+    protected abstract Field toField(ResultSet resultSet);
 
-//    /**
-//     * @param args
-//     */
-//    public static void main(String[] args) throws SQLException {
-//        // TODO Auto-generated method stub
-//        JdbcUtils jdbcUtils = new JdbcUtils();
-//        jdbcUtils.getConnection();
-//
-//        String tableName = "t_pet_small_race";
-//
-//        List<Map<String, String>> descs = jdbcUtils.desc(tableName);
-//
-//        for (Map<String, String> desc:descs){
-//            System.out.println(desc.get("Field") + "-" + Utils.underlineToCamel(desc.get("Field")));
-//        }
-//    }
+    public  String toJavaType(String type) {
+        if (StringUtils.indexOf(type,"timestamp") > -1){
+            return "Date";
+        }else if (StringUtils.indexOf(type,"tinyint") > -1){
+            return "Boolean";
+        }else if (StringUtils.indexOf(type,"int") > -1){
+            return "Integer";
+        }else if (StringUtils.indexOf(type,"double") > -1){
+            return "double";
+        }
+        return "String";
+    }
+
+    public boolean isFilterField(String name) {
+        return ArrayUtils.contains(getFilterField(), name);
+    }
+
+    public abstract String[] getFilterField();
 }
 

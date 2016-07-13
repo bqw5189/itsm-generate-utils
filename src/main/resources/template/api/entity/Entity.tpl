@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * <#$entity.entityName#>
  * <p>
- * Created by tom on 16/7/2.
+* Created by <#$auth#> on <#$date#>.
  */
 @Entity
 @Table(name = "<#$entity.tableName#>")

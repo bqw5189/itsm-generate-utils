@@ -17,7 +17,7 @@ import javax.ws.rs.ProcessingException;
 import java.util.List;
 
 /**
- * @author baiqw
+* Created by <#$auth#> on <#$date#>.
  */
 public class <#$entity.entityClassName#>RestClient extends RestClientTestCase {
     private static final Logger LOGGER = LoggerFactory.getLogger(<#$entity.entityClassName#>RestClient.class);

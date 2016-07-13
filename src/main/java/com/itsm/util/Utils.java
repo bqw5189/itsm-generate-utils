@@ -1,14 +1,5 @@
 package com.itsm.util;
 
-import com.itsm.entity.Field;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.itsm.entity.Entity.FILTER_FIELD;
-
 /**
  * Created by itsm on 16/7/2.
  */
@@ -45,28 +36,5 @@ public class Utils {
         return String.valueOf(array);
     }
 
-    public static String toJavaType(String type) {
-        if (StringUtils.indexOf(type,"timestamp") > -1){
-            return "Date";
-        }else if (StringUtils.indexOf(type,"tinyint") > -1){
-            return "Boolean";
-        }else if (StringUtils.indexOf(type,"int") > -1){
-            return "Integer";
-        }else if (StringUtils.indexOf(type,"double") > -1){
-            return "double";
-        }
-        return "String";
-    }
 
-    public static List<Field> filterField(List<Field> fields) {
-        List<Field> fieldList = new ArrayList<Field>();
-        for(Field field: fields){
-            if (ArrayUtils.contains(FILTER_FIELD, field.getName())){
-                continue;
-            }
-            fieldList.add(field);
-        }
-        System.out.println(fieldList);
-        return fieldList;
-    }
 }

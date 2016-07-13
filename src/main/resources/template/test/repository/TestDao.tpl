@@ -11,10 +11,10 @@ import java.util.List;
 
 /**
  * <#$entity.entityName#>
- * Created by tom on 16/6/21.
+* Created by <#$auth#> on <#$date#>.
  */
 @ContextConfiguration(locations = {"/META-INF/spring/applicationContext.xml"})
-public class Test<#$entity.entityClassName#>Dao extends SpringTransactionalTestCase {
+public class <#$entity.entityClassName#>DaoTest extends SpringTransactionalTestCase {
 
     @Autowired
     private <#$entity.entityClassName#>Dao <#$entity.fieldClassName#>Dao;

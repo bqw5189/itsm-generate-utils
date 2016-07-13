@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * @author baiqw
+* Created by <#$auth#> on <#$date#>.
  */
 public class <#$entity.entityClassName#>DemoAction {
     private static final Logger LOGGER = LoggerFactory.getLogger(<#$entity.entityClassName#>DemoAction.class);
