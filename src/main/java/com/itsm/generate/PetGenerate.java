@@ -60,6 +60,8 @@ public class PetGenerate extends AbstractGenerate{
         tableAndDescs.put("t_medic_register_record", "医生登记记录明细");
         tableAndDescs.put("t_medic_prescription_detail", "医生处方明细");
         tableAndDescs.put("t_medic_prescription", "医生处方");
+        tableAndDescs.put("t_base_medic_prescription_detail", "处方明细");
+        tableAndDescs.put("t_base_medic_prescription", "处方");
         tableAndDescs.put("t_in_hospital_prescription_detail", "住院处方明细");
         tableAndDescs.put("t_in_hospital_prescription", "住院处方");
         tableAndDescs.put("t_medic_medictreat_record", "医生处理记录");
