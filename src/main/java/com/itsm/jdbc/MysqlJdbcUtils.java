@@ -70,7 +70,7 @@ public class MysqlJdbcUtils extends JdbcUtils{
     }
 
     public String[] getFilterField() {
-        return new String[]{"uuid","createUserId","createDate", "updateUserId", "updateDate","status"};
+        return new String[]{"id","uuid","createUserId","createDate", "updateUserId", "updateDate","status"};
     }
 
     private Map<String, String> fieldAndDesc(String tableName){
