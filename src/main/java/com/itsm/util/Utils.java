@@ -27,12 +27,12 @@ public class Utils {
 
     public static String firstLetterToUpper(String str){
         char[] array = str.toCharArray();
-        array[0] -= 32;
+        array[0] =  (array[0] + "").toUpperCase().charAt(0);
         return String.valueOf(array);
     }
     public static String firstLetterToLower(String str){
         char[] array = str.toCharArray();
-        array[0] += 32;
+        array[0] =  (array[0] + "").toLowerCase().charAt(0);
         return String.valueOf(array);
     }
 

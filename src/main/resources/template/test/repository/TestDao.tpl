@@ -25,6 +25,6 @@ public class <#$entity.entityClassName#>DaoTest extends SpringTransactionalTestC
 
         Assert.assertNotNull(<#$entity.fieldClassName#>s);
 
-        Assert.assertEquals(<#$entity.fieldClassName#>s.size(), 3);
+        Assert.assertEquals(<#$entity.fieldClassName#>s.size(), 0);
     }
 }

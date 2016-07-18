@@ -81,10 +81,14 @@ public class MysqlJdbcUtils extends JdbcUtils{
             fieldAndDescs = new HashMap<String, String>();
 
             List<String> tableSchemas = tableSchema(tableName);
+            LOGGER.info("{}:tableSchemas->{}",tableName, tableSchemas);
 
             for (String line : tableSchemas) {
                 if (line.indexOf("--") > -1) {
                     String[] fieldAndDesc = line.split("--");
+                    if (fieldAndDesc.length < 2){
+                        break;
+                    }
                     String fieldName = StringUtils.trimToEmpty(fieldAndDesc[0]).split(" ")[0];
                     if (fieldName.indexOf("`")>-1){
                         fieldName = fieldName.substring(1, fieldName.length()-1);
