@@ -13,11 +13,13 @@ public class PostgreJdbcUtils extends JdbcUtils{
     //数据库用户名
     private static final String USERNAME = "postgres";
     //数据库密码
-    private static final String PASSWORD = "postgres";
+    private static final String PASSWORD = "Netinsight!@#";
     //驱动信息
     private static final String DRIVER = "org.postgresql.Driver";
     //数据库地址
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String URL = "jdbc:postgresql://172.17.191.137:5432/postgres";
+
+    private static final String SCHEMAS = "bmc";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PostgreJdbcUtils.class);
 
@@ -39,7 +41,7 @@ public class PostgreJdbcUtils extends JdbcUtils{
     }
 
     protected String getDescSql(String tableName) {
-        return "select * from table_msg('public','"+tableName+"')";
+        return "select * from table_msg('"+SCHEMAS+"','"+tableName+"')";
     }
 
     protected Field toField(ResultSet resultSet, String tableName) {

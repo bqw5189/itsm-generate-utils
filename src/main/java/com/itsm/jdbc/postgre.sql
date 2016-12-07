@@ -19,7 +19,7 @@ END;
 $BODY$
 LANGUAGE PLPGSQL;
 
-CREATE TYPE "public"."tablestruct" AS (
+CREATE TYPE "bmc"."tablestruct" AS (
   "fields_key_name" varchar(100),
   "fields_name" VARCHAR(200),
   "fields_type" VARCHAR(20),
@@ -29,7 +29,7 @@ CREATE TYPE "public"."tablestruct" AS (
   "fields_comment" VARCHAR(1000)
 );
 
-CREATE OR REPLACE FUNCTION "public"."table_msg" (a_schema_name varchar, a_table_name varchar) RETURNS SETOF "public"."tablestruct" AS
+CREATE OR REPLACE FUNCTION "bmc"."table_msg" (a_schema_name varchar, a_table_name varchar) RETURNS SETOF "bmc"."tablestruct" AS
 $body$
 DECLARE
      v_ret tablestruct;
@@ -96,11 +96,11 @@ END;
 $body$
 LANGUAGE 'plpgsql' VOLATILE CALLED ON NULL INPUT SECURITY INVOKER;
 
-COMMENT ON FUNCTION "public"."table_msg"(a_schema_name varchar, a_table_name varchar)
+COMMENT ON FUNCTION "bmc"."table_msg"(a_schema_name varchar, a_table_name varchar)
 IS '获得表信息';
 
 ---重载一个函数
-CREATE OR REPLACE FUNCTION "public"."table_msg" (a_table_name varchar) RETURNS SETOF "public"."tablestruct" AS
+CREATE OR REPLACE FUNCTION "bmc"."table_msg" (a_table_name varchar) RETURNS SETOF "bmc"."tablestruct" AS
 $body$
 DECLARE
     v_ret tablestruct;
@@ -113,7 +113,7 @@ END;
 $body$
 LANGUAGE 'plpgsql' VOLATILE CALLED ON NULL INPUT SECURITY INVOKER;
 
-COMMENT ON FUNCTION "public"."table_msg"(a_table_name varchar)
+COMMENT ON FUNCTION "bmc"."table_msg"(a_table_name varchar)
 IS '获得表信息';
 
 

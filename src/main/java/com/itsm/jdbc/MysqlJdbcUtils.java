@@ -117,12 +117,16 @@ public class MysqlJdbcUtils extends JdbcUtils{
 
         int start = SCHEMA_SQL_LIST.indexOf("DROP TABLE IF EXISTS `"+tableName+"`;");
         for (int i = start; i < SCHEMA_SQL_LIST.size();i++){
-            String line = SCHEMA_SQL_LIST.get(i);
-            if (line.indexOf(") ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;")>-1){
-                break;
-            }
+            try {
+                String line = SCHEMA_SQL_LIST.get(i);
 
-            schemas.add(line);
+                if (line.indexOf(") ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;") > -1) {
+                    break;
+                }
+                schemas.add(line);
+            }catch (Exception e){
+                LOGGER.error("{}, Table Schema Error!", tableName, e);
+            }
         }
 
         return schemas;

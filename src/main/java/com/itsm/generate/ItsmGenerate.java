@@ -12,25 +12,28 @@ import java.util.Map;
  */
 public class ItsmGenerate extends AbstractGenerate{
     public String getOutPath() {
-        return "/work/001_code/github/java/itsm-platform/itsm-account/";
+        return "/work/001_code/github/java/uics/uics-grab/";
     }
 
     public String getPackagePath() {
-        return "/com/itsm/platform/account/";
+        return "/com/uics/grab/";
     }
 
     public String getPackage() {
-        return "com.itsm.platform.account.";
+        return "com.uics.grab.";
     }
 
     public String getArtifactId() {
-        return "itsm-account-";
+        return "uics-grab-";
     }
 
     public Map<String, String> tableAndDescs() {
         Map<String, String> tableAndDescs = new HashMap<String, String>();
-        tableAndDescs.put("t_um_function", "功能表");
-        tableAndDescs.put("t_um_role", "角色表");
+        tableAndDescs.put("t_vrv_config", "vrv配置信息");
+        tableAndDescs.put("t_vrv_target", "vrv监控指标统计信息");
+        tableAndDescs.put("t_h3c_realtime_fault", "h3c告警信息");
+        tableAndDescs.put("t_idcs_todo", "idcs代办");
+        tableAndDescs.put("t_idcs_notification", "idcs通知");
         return tableAndDescs;
     }
 
