@@ -30,7 +30,7 @@ public class MysqlJdbcUtils extends JdbcUtils{
     //驱动信息
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     //数据库地址
-    private static final String URL = "jdbc:mysql://localhost:3306/fiona_pet_business";
+    private static final String URL = "jdbc:mysql://localhost:3306/onecmdb";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MysqlJdbcUtils.class);
 
@@ -51,18 +51,29 @@ public class MysqlJdbcUtils extends JdbcUtils{
         return URL;
     }
 
+    public static final String DESC_SQL = "select column_name AS `列名`,\n" +
+            "    data_type   AS `数据类型`,\n" +
+            "    character_maximum_length  AS `字符长度`,\n" +
+            "    numeric_precision AS `数字长度`,\n" +
+            "    numeric_scale AS `小数位数`,\n" +
+            "    is_nullable AS `是否允许非空`,\n" +
+            "    extra AS `是否自增`,\n" +
+            "    column_default  AS  `默认值`,\n" +
+            "    column_comment  AS  `备注`\n" +
+            "    from information_schema.columns where table_name='%s'";
+
     protected String getDescSql(String tableName) {
-        return " desc "+tableName +"";
+        return String.format(DESC_SQL, tableName);
     }
 
     protected Field toField(ResultSet resultSet, String tableName) {
         Field field = new Field();
-        Map<String, String> fieldAndDescs = fieldAndDesc(tableName);
+//        Map<String, String> fieldAndDescs = fieldAndDesc(tableName);
         try {
-            field.setName(resultSet.getString("Field"));
-            field.setDesc(fieldAndDescs.get(resultSet.getString("Field")));
-            field.setType(toJavaType(resultSet.getString("Type")));
-            field.setIsNull(resultSet.getString("Null"));
+            field.setName(resultSet.getString("列名"));
+            field.setDesc(resultSet.getString("备注"));
+            field.setType(toJavaType(resultSet.getString("数据类型")));
+            field.setIsNull(resultSet.getString("是否允许非空"));
         } catch (SQLException e) {
             LOGGER.warn("to field error!", e);
         }

@@ -12,32 +12,31 @@ import java.util.Map;
  */
 public class ItsmGenerate extends AbstractGenerate{
     public String getOutPath() {
-        return "/work/001_code/github/java/uics/uics-grab/";
+        return "/work/001_code/github/java/uics/uics-asset/";
     }
 
     public String getPackagePath() {
-        return "/com/uics/grab/";
+        return "/com/uics/asset/";
     }
 
     public String getPackage() {
-        return "com.uics.grab.";
+        return "com.uics.asset.";
     }
 
     public String getArtifactId() {
-        return "uics-grab-";
+        return "uics-asset-";
     }
 
     public Map<String, String> tableAndDescs() {
         Map<String, String> tableAndDescs = new HashMap<String, String>();
-        tableAndDescs.put("t_vrv_config", "vrv配置信息");
-        tableAndDescs.put("t_vrv_target", "vrv监控指标统计信息");
-        tableAndDescs.put("t_h3c_realtime_fault", "h3c告警信息");
-        tableAndDescs.put("t_idcs_todo", "idcs代办");
-        tableAndDescs.put("t_idcs_notification", "idcs通知");
+        tableAndDescs.put("t_attribute", "属性信息");
+        tableAndDescs.put("t_ci", "配置信息");
+        tableAndDescs.put("t_cmdb_tx", "事务信息");
+        tableAndDescs.put("t_rfc", "变更信息");
         return tableAndDescs;
     }
 
     public JdbcUtils getJdbcUtils() {
-        return new PostgreJdbcUtils();
+        return new MysqlJdbcUtils();
     }
 }
