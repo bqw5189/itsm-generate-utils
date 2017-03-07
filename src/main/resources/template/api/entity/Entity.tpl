@@ -2,7 +2,7 @@ package <#$package#>entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import org.dubbo.x.entity.Idable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,14 +19,13 @@ import java.util.Date;
 @Entity
 @Table(name = "<#$entity.tableName#>")
 @ApiModel("<#$entity.entityName#>")
-public class <#$entity.entityClassName#> extends CMSEntity {
+public class <#$entity.entityClassName#> extends IdEntity {
     <#foreach from=$entity.fields item=field#>
     /**
      * <#$field.desc#>
      */
-    @ApiModelProperty(value = "<#$field.desc#>", required = false)
-    <#if $field.isNull == "not null" #>@NotNull<#/if#>
-    @Column(columnDefinition = "<#$field.desc#>")
+    @ApiModelProperty(value = "<#$field.desc#>", required = false)<#if $field.isNull == "not null" #>@NotNull<#/if#>
+    @Column(name = "<#$field.columnName#>", columnDefinition = "<#$field.desc#>")
     private <#$field.type#> <#$field.name#>;
     public <#$field.type#> get<#$field.monthName#>() {
         return <#$field.name#>;

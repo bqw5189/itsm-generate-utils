@@ -7,13 +7,18 @@ import com.itsm.util.Utils;
  */
 public class Field {
     private String name;
+    private String columnName;
     private String type;
     private String isNull;
     private String monthName;
     private String desc;
 
     public String getName() {
+
         return Utils.underlineToCamel(name);
+    }
+    public String getFileName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -50,6 +55,19 @@ public class Field {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        if (columnName.startsWith("c_")){
+            name = columnName.substring(2,columnName.length());
+        }else{
+            name = columnName;
+        }
+        this.columnName = columnName;
     }
 
     @Override

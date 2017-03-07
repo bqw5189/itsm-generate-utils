@@ -22,7 +22,7 @@ public class Entity {
     }
 
     public String getEntityClassName() {
-        return Utils.underlineToCamel(this.getTableName()).substring(1);
+        return Utils.firstLetterToUpper(Utils.underlineToCamel(this.getTableName()).substring(1));
     }
 
     public String getFieldClassName() {

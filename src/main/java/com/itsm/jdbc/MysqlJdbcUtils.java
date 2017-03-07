@@ -24,13 +24,13 @@ public class MysqlJdbcUtils extends JdbcUtils{
     private static final List<String> SCHEMA_SQL_LIST = new ArrayList<String>();
     private static final Map<String, Map<String, String>> TABLE_SCHEMA_SQL_MAP = new HashMap<String, Map<String, String>>();
     //数据库用户名
-    private static final String USERNAME = "test";
+    private static final String USERNAME = "root";
     //数据库密码
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "root";
     //驱动信息
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     //数据库地址
-    private static final String URL = "jdbc:mysql://localhost:3306/onecmdb";
+    private static final String URL = "jdbc:mysql://172.16.3.55:3306/smart";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MysqlJdbcUtils.class);
 
@@ -60,7 +60,7 @@ public class MysqlJdbcUtils extends JdbcUtils{
             "    extra AS `是否自增`,\n" +
             "    column_default  AS  `默认值`,\n" +
             "    column_comment  AS  `备注`\n" +
-            "    from information_schema.columns where table_name='%s'";
+            "    from information_schema.columns where table_name='%s'  and table_schema='smart'";
 
     protected String getDescSql(String tableName) {
         return String.format(DESC_SQL, tableName);
@@ -70,7 +70,7 @@ public class MysqlJdbcUtils extends JdbcUtils{
         Field field = new Field();
 //        Map<String, String> fieldAndDescs = fieldAndDesc(tableName);
         try {
-            field.setName(resultSet.getString("列名"));
+            field.setColumnName(resultSet.getString("列名"));
             field.setDesc(resultSet.getString("备注"));
             field.setType(toJavaType(resultSet.getString("数据类型")));
             field.setIsNull(resultSet.getString("是否允许非空"));
