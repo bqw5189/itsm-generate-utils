@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,8 @@ public abstract class AbstractGenerate {
      * @return
      */
     public abstract String getOutPath();
+    public String getUIOutPath(){return getOutPath();}
+
 
     public String getOutApiPath(){
         return getOutModulePath("api");
@@ -87,13 +90,19 @@ public abstract class AbstractGenerate {
 
     public abstract JdbcUtils getJdbcUtils();
 
+    public boolean hasView(String tableName){
+        return false;
+    }
+
     public void generate() {
+        List<Entity> hasViews = new ArrayList<Entity>();
 
         for (Map.Entry<String, String> tableAndDesc : this.tableAndDescs().entrySet()) {
             Entity entity = new Entity();
 
             entity.setTableName(tableAndDesc.getKey());
             entity.setEntityName(tableAndDesc.getValue());
+            entity.setHasView(hasView(tableAndDesc.getKey()));
 
             //初始化字段
             initField(entity);
@@ -103,6 +112,37 @@ public abstract class AbstractGenerate {
 
             //xml
             updateXml(entity);
+
+            if (entity.isHasView()){
+                hasViews.add(entity);
+            }
+        }
+
+        generateView(hasViews);
+    }
+
+    /**
+     * 生成菜单信息
+     * @param entitys
+     */
+    private void generateView(List<Entity> entitys) {
+        renderTemplateUI(entitys, "utils/menu.tpl",new File(getUIOutPath() + "utils/menu.js"));
+        renderTemplateUI(entitys, "utils/mock.tpl",new File(getUIOutPath() + "utils/mock.js"));
+        renderTemplateUI(entitys, "router.tpl",new File(getUIOutPath() + "router.js"));
+
+        for (Entity entity: entitys){
+            renderTemplateUI(entity, "services/services.tpl",new File(getUIOutPath() + "services/" + entity.getPath() + ".js"));
+            renderTemplateUI(entity, "models/models.tpl",new File(getUIOutPath() + "models/" + entity.getPath() + ".js"));
+            renderTemplateUI(entity, "routes/routes.tpl",new File(getUIOutPath() + "routes/" + entity.getPath() + ".js"));
+
+            renderTemplateUI(entity, "components/list.tpl",new File(getUIOutPath() + "components/" + entity.getPath() + File.separator + "list.js"));
+            renderTemplateUI(entity, "components/list.less.tpl",new File(getUIOutPath() + "components/" + entity.getPath() + File.separator + "list.less"));
+            renderTemplateUI(entity, "components/search.tpl",new File(getUIOutPath() + "components/" + entity.getPath() + File.separator + "search.js"));
+            renderTemplateUI(entity, "components/search.less.tpl",new File(getUIOutPath() + "components/" + entity.getPath() + File.separator + "search.less"));
+
+            renderTemplateUI(entity, "components/modal.tpl",new File(getUIOutPath() + "components/" + entity.getPath() + File.separator + "modal.js"));
+
+            renderTemplateUI(entity, "mock/mock.tpl",new File(getUIOutPath() + "../mock/" + entity.getPath() + ".js"));
         }
     }
 
@@ -225,7 +265,63 @@ public abstract class AbstractGenerate {
         return outModulePath + File.separatorChar + lastPackageName + File.separatorChar + entity.getEntityClassName() + endFileName;
     }
 
+    private static final Map<String, String> TEMPLATE_UI_CONFIG = new HashMap<String, String>();
+    private static Engine TEMPLATE_UI_ENGINE = null;
+    static {
+        TEMPLATE_UI_CONFIG.put("template.path", "src/main/resources/ui-template/");
+        TEMPLATE_UI_CONFIG.put("encoding", "utf-8");
 
+        TEMPLATE_UI_ENGINE = new Engine(TEMPLATE_UI_CONFIG);
+        TEMPLATE_UI_ENGINE.setLeftDelimiter("<#");
+        TEMPLATE_UI_ENGINE.setRightDelimiter("#>");
+    }
+
+    public void renderTemplateUI(Entity entity, String templateName, final File outFile) {
+        try {
+            Context context = new Context();
+            context.set("entity", entity);
+
+            renderTemplateUI(context, templateName, outFile);
+        }catch (Exception e){
+            LOGGER.warn("render error!", e);
+        }
+
+    }
+
+    public void renderTemplateUI(Context context, String templateName, final File outFile){
+        FileOutputStream fileOutputStream = null;
+
+        try {
+
+            if (!outFile.getParentFile().exists()){
+                outFile.getParentFile().mkdirs();
+            }
+
+            Template template = TEMPLATE_UI_ENGINE.getTemplate(templateName);
+
+            fileOutputStream = new FileOutputStream(outFile);
+
+            template.merge(context, fileOutputStream);
+
+        }catch (Exception e){
+            LOGGER.warn("render error!", e);
+        }finally {
+            IOUtils.closeQuietly(fileOutputStream);
+        }
+    }
+
+
+    public void renderTemplateUI(List<Entity> entitys, String templateName, final File outFile) {
+        try {
+            Context context = new Context();
+            context.set("entitys", entitys);
+
+            renderTemplateUI(context, templateName, outFile);
+        }catch (Exception e){
+            LOGGER.warn("render error!", e);
+        }
+
+    }
 
     public void renderTemplate(Entity entity, String templateName, final File outFile) {
         Map<String, String> config = new HashMap<String, String>();

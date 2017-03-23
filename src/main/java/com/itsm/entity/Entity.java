@@ -13,6 +13,16 @@ public class Entity {
     private String tableName;
     private List<Field> fields;
 
+    private boolean hasView = true;
+
+    public boolean isHasView() {
+        return hasView;
+    }
+
+    public void setHasView(boolean hasView) {
+        this.hasView = hasView;
+    }
+
     public String getEntityName() {
         return entityName;
     }

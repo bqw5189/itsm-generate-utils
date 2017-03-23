@@ -3,7 +3,9 @@ package com.itsm.generate;
 import com.itsm.jdbc.JdbcUtils;
 import com.itsm.jdbc.MysqlJdbcUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,6 +14,11 @@ import java.util.Map;
 public class WXGenerate extends AbstractGenerate{
     public String getOutPath() {
         return "/work/001_code/svn/smart/";
+    }
+
+    @Override
+    public String getUIOutPath() {
+        return "/work/001_code/github/js/antd-admin/src/";
     }
 
     public String getPackagePath() {
@@ -46,6 +53,15 @@ public class WXGenerate extends AbstractGenerate{
 
 
         return tableAndDescs;
+    }
+
+    @Override
+    public boolean hasView(String tableName) {
+        List<String> views = new ArrayList<String>();
+        views.add("t_wx_user");
+        views.add("t_business");
+        views.add("t_deparment");
+        return views.contains(tableName);
     }
 
     public JdbcUtils getJdbcUtils() {
