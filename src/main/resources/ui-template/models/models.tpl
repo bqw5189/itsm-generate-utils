@@ -38,6 +38,7 @@ export default {
   effects: {
     *query ({ payload }, { call, put }) {
       const data = yield call(query, parse(payload))
+        console.log(data)
       if (data) {
         yield put({
           type: 'querySuccess',
@@ -50,33 +51,21 @@ export default {
     },
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload })
-      if (data && data.success) {
-        yield put({
-          type: 'querySuccess',
-          payload: {
-            list: data.data,
-            pagination: {
-              total: data.page.total,
-              current: data.page.current,
-            },
-          },
-        })
+      if (data && data.message == 'OK') {
+          yield put({
+              type: 'query',
+              payload: {},
+          })
       }
     },
     *create ({ payload }, { call, put }) {
       yield put({ type: 'hideModal' })
       const data = yield call(create, payload)
-      if (data && data.success) {
-        yield put({
-          type: 'querySuccess',
-          payload: {
-            list: data.data,
-            pagination: {
-              total: data.page.total,
-              current: data.page.current,
-            },
-          },
-        })
+      if (data && data.message == 'OK') {
+          yield put({
+              type: 'query',
+              payload: {},
+          })
       }
     },
     *update ({ payload }, { select, call, put }) {
@@ -84,17 +73,11 @@ export default {
       const id = yield select(({ <#$entity.path#> }) => <#$entity.path#>.currentItem.id)
       const newUser = { ...payload, id }
       const data = yield call(update, newUser)
-      if (data && data.success) {
-        yield put({
-          type: 'querySuccess',
-          payload: {
-            list: data.data,
-            pagination: {
-              total: data.page.total,
-              current: data.page.current,
-            },
-          },
-        })
+      if (data && data.message == 'OK') {
+          yield put({
+              type: 'query',
+              payload: {},
+          })
       }
     },
     *switchIsMotion ({
@@ -129,3 +112,4 @@ export default {
   },
 
 }
+

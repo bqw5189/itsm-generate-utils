@@ -1,9 +1,12 @@
 import { request } from '../utils'
+import {paramsFormat, dataFormat} from '../utils/pageFormat'
 
 export async function query (params) {
-  return request('/api/<#$entity.path#>', {
-    method: 'get',
-    data: params,
+  return request('/api/<#$entity.path#>/page', {
+    method: 'post',
+    data: paramsFormat(params)
+  }).done((data) => {
+    return dataFormat(data)
   })
 }
 
@@ -27,3 +30,4 @@ export async function update (params) {
     data: params,
   })
 }
+

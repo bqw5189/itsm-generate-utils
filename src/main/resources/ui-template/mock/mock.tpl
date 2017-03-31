@@ -21,7 +21,7 @@ let <#$entity.path#>ListData = global[dataKey]
 
 module.exports = {
 
-  'GET /api/<#$entity.path#>' (req, res) {
+  'POST /api/<#$entity.path#>/page' (req, res) {
     const page = qs.parse(req.query)
     const pageSize = page.pageSize || 10
     const currentPage = page.page || 1
