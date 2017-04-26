@@ -37,12 +37,12 @@ public abstract class AbstractGenerate {
     public String getOutApiPath(){
         return getOutModulePath("api");
     }
-    public String getOutConsumerPath(){
-        return getOutModulePath("consumer");
-    }
-    public String getOutConsumerTestPath(){
-        return getOutModuleTestPath("consumer");
-    }
+//    public String getOutConsumerPath(){
+//        return getOutModulePath("consumer");
+//    }
+//    public String getOutConsumerTestPath(){
+//        return getOutModuleTestPath("consumer");
+//    }
     public String getOutServiceProviderPath(){
         return getOutModulePath("service-provider");
     }
@@ -111,7 +111,7 @@ public abstract class AbstractGenerate {
             generateEntity(entity);
 
             //xml
-            updateXml(entity);
+//            updateXml(entity);
 
             if (entity.isHasView()){
                 hasViews.add(entity);
@@ -237,8 +237,8 @@ public abstract class AbstractGenerate {
         outFileNameAndTemplateNames.put(outFileName(getOutApiPath(), "service", entity, "Service.java"), "api/service/Service.tpl");
 
         //consumer
-        outFileNameAndTemplateNames.put(outFileName(getOutConsumerPath(), "consumer", entity, "DemoAction.java"), "consumer/DemoAction.tpl");
-        outFileNameAndTemplateNames.put(outFileName(getOutConsumerTestPath(), "restclient", entity, "RestClient.java"), "consumer/RestClient.tpl");
+//        outFileNameAndTemplateNames.put(outFileName(getOutConsumerPath(), "consumer", entity, "DemoAction.java"), "consumer/DemoAction.tpl");
+//        outFileNameAndTemplateNames.put(outFileName(getOutConsumerTestPath(), "restclient", entity, "RestClient.java"), "consumer/RestClient.tpl");
 
         //service provider
         outFileNameAndTemplateNames.put(outFileName(getOutServiceProviderPath(), "repository", entity, "Dao.java"), "service/Dao.tpl");
@@ -293,15 +293,24 @@ public abstract class AbstractGenerate {
 
         try {
 
+            LOGGER.info("exists:{} -> render file:{} begin ",outFile.exists(), outFile.getPath());
+
             if (!outFile.getParentFile().exists()){
                 outFile.getParentFile().mkdirs();
             }
+
+            if(outFile.exists() && (!outFile.getPath().endsWith("/menu.js") && !outFile.getPath().endsWith("/mock.js") && !outFile.getPath().endsWith("/router.js"))){
+                return;
+            }
+
 
             Template template = TEMPLATE_UI_ENGINE.getTemplate(templateName);
 
             fileOutputStream = new FileOutputStream(outFile);
 
             template.merge(context, fileOutputStream);
+
+            LOGGER.info("render file:{} end", outFile.getPath());
 
         }catch (Exception e){
             LOGGER.warn("render error!", e);

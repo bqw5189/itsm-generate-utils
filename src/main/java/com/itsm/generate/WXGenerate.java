@@ -18,7 +18,7 @@ public class WXGenerate extends AbstractGenerate{
 
     @Override
     public String getUIOutPath() {
-        return "/work/001_code/github/js/antd-admin/src/";
+        return "/work/001_code/svn/joint/trunk/smart/smart-web/src/";
     }
 
     public String getPackagePath() {
@@ -59,8 +59,13 @@ public class WXGenerate extends AbstractGenerate{
     public boolean hasView(String tableName) {
         List<String> views = new ArrayList<String>();
         views.add("t_wx_user");
+        views.add("t_audit_log");
         views.add("t_business");
         views.add("t_deparment");
+        views.add("t_function");
+//        views.add("t_role");
+        views.add("t_wx_business_config");
+
         return views.contains(tableName);
     }
 
