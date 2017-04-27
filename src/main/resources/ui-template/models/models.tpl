@@ -51,7 +51,7 @@ export default {
     },
     *'delete' ({ payload }, { call, put }) {
       const data = yield call(remove, { id: payload })
-      if (data && data.message == 'OK') {
+      if (data && data.errorCode === 0) {
           yield put({
               type: 'query',
               payload: {},
@@ -61,7 +61,7 @@ export default {
     *create ({ payload }, { call, put }) {
       yield put({ type: 'hideModal' })
       const data = yield call(create, payload)
-      if (data && data.message == 'OK') {
+      if (data && data.errorCode === 0) {
           yield put({
               type: 'query',
               payload: {},
@@ -73,7 +73,7 @@ export default {
       const id = yield select(({ <#$entity.path#> }) => <#$entity.path#>.currentItem.id)
       const newUser = { ...payload, id }
       const data = yield call(update, newUser)
-      if (data && data.message == 'OK') {
+      if (data && data.errorCode === 0) {
           yield put({
               type: 'query',
               payload: {},
