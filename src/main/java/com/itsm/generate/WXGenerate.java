@@ -66,6 +66,8 @@ public class WXGenerate extends AbstractGenerate{
 //        views.add("t_role");
 //        views.add("t_wx_business_config");
         views.add("t_wx_menu");
+        views.add("t_wx_msg_log");
+        views.add("t_wx_sign_log");
 
         return views.contains(tableName);
     }

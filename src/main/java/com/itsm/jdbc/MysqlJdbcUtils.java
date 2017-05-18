@@ -24,13 +24,13 @@ public class MysqlJdbcUtils extends JdbcUtils{
     private static final List<String> SCHEMA_SQL_LIST = new ArrayList<String>();
     private static final Map<String, Map<String, String>> TABLE_SCHEMA_SQL_MAP = new HashMap<String, Map<String, String>>();
     //数据库用户名
-    private static final String USERNAME = "root";
+    private static final String USERNAME = "test";
     //数据库密码
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "123456";
     //驱动信息
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     //数据库地址
-    private static final String URL = "jdbc:mysql://172.16.3.55:3306/smart";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/fiona_pet_account";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MysqlJdbcUtils.class);
 
