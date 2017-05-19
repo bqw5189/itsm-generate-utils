@@ -52,6 +52,9 @@ public abstract class AbstractGenerate {
     public String getOutServiceProviderTestPath(){
         return getOutModuleTestPath("service-provider");
     }
+    public String getOutRestProviderTestPath(){
+        return getOutModuleTestPath("rest-provider");
+    }
 
     public String getOutModulePath(String moduleName){
         return getOutPath() + getArtifactId() + moduleName+"/src/main/java" + getPackagePath();
@@ -233,6 +236,7 @@ public abstract class AbstractGenerate {
         Map<String, String> outFileNameAndTemplateNames = new HashMap<String, String>();
         //api
         outFileNameAndTemplateNames.put(outFileName(getOutApiPath(), "entity", entity, ".java"), "api/entity/Entity.tpl");
+        outFileNameAndTemplateNames.put(outFileName(getOutApiPath(), "dto", entity, "DTO.java"), "api/dto/Dto.tpl");
         outFileNameAndTemplateNames.put(outFileName(getOutApiPath(), "facade", entity, "RestService.java"), "api/facade/RestService.tpl");
         outFileNameAndTemplateNames.put(outFileName(getOutApiPath(), "service", entity, "Service.java"), "api/service/Service.tpl");
 
@@ -247,6 +251,7 @@ public abstract class AbstractGenerate {
 
         //rest provider
         outFileNameAndTemplateNames.put(outFileName(getOutRestProviderPath(), "facade", entity, "RestServiceImpl.java"), "rest/RestServiceImpl.tpl");
+        outFileNameAndTemplateNames.put(outFileName(getOutRestProviderTestPath(), "facade", entity, "RestServiceTest.java"), "test/rest/RestServiceTest.tpl");
 
         for(Map.Entry<String, String> outFileNameAndTemplateName: outFileNameAndTemplateNames.entrySet()){
             outTemplate(entity, outFileNameAndTemplateName.getKey(), outFileNameAndTemplateName.getValue());

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class SpringBootGenerate extends AbstractGenerate{
     public String getOutPath() {
-        return "/work/001_code/github/java/fiona-pet/account-springboot";
+        return "/work/001_code/github/java/fiona-pet/account-springboot/";
     }
 
     @Override
@@ -35,7 +35,7 @@ public class SpringBootGenerate extends AbstractGenerate{
 
     public Map<String, String> tableAndDescs() {
         Map<String, String> tableAndDescs = new HashMap<String, String>();
-        tableAndDescs.put("t_user","用户信息");
+        tableAndDescs.put("t_menu","菜单信息");
         return tableAndDescs;
     }
 

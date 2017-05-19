@@ -1,30 +1,37 @@
 package <#$package#>repository;
 
+import <#$package#>TestSmartApplication;
 import <#$package#>entity.<#$entity.entityClassName#>;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springside.modules.test.spring.SpringTransactionalTestCase;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
 /**
- * <#$entity.entityName#>
+* <#$entity.entityName#>
 * Created by <#$auth#> on <#$date#>.
- */
-@ContextConfiguration(locations = {"/META-INF/spring/applicationContext.xml"})
-public class <#$entity.entityClassName#>DaoTest extends SpringTransactionalTestCase {
+*/
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = TestSmartApplication.class)
+@ComponentScan("<#$package#>")
+@EnableAutoConfiguration
+public class <#$entity.entityClassName#>DaoTest {
 
     @Autowired
-    private <#$entity.entityClassName#>Dao <#$entity.fieldClassName#>Dao;
+    private <#$entity.entityClassName#>Dao dao;
 
     @Test
-    public void findAll(){
-        List<<#$entity.entityClassName#>> <#$entity.fieldClassName#>s = <#$entity.fieldClassName#>Dao.findAllBy();
+    public void findAll() {
+        List<<#$entity.entityClassName#>> lists = dao.findAllBy();
 
-        Assert.assertNotNull(<#$entity.fieldClassName#>s);
+        Assert.assertNotNull(lists);
 
-        Assert.assertEquals(<#$entity.fieldClassName#>s.size(), 0);
+        Assert.assertEquals(lists.size(), 0);
     }
 }

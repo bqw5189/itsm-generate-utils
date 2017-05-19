@@ -60,7 +60,7 @@ public class MysqlJdbcUtils extends JdbcUtils{
             "    extra AS `是否自增`,\n" +
             "    column_default  AS  `默认值`,\n" +
             "    column_comment  AS  `备注`\n" +
-            "    from information_schema.columns where table_name='%s'  and table_schema='smart'";
+            "    from information_schema.columns where table_name='%s'  and table_schema='fiona_pet_account'";
 
     protected String getDescSql(String tableName) {
         return String.format(DESC_SQL, tableName);
@@ -77,6 +77,8 @@ public class MysqlJdbcUtils extends JdbcUtils{
         } catch (SQLException e) {
             LOGGER.warn("to field error!", e);
         }
+        LOGGER.info("fields:{}", field);
+
         return field;
     }
 

@@ -1,7 +1,7 @@
 package <#$package#>service;
 
 import <#$package#>entity.<#$entity.entityClassName#>;
-import org.dubbo.x.service.CURDService;
+
 /**
  * <#$entity.entityName#>
 * Created by <#$auth#> on <#$date#>.
