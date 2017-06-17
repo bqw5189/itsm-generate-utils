@@ -36,6 +36,11 @@ public class SpringBootGenerate extends AbstractGenerate{
     public Map<String, String> tableAndDescs() {
         Map<String, String> tableAndDescs = new HashMap<String, String>();
         tableAndDescs.put("t_menu","菜单信息");
+        tableAndDescs.put("t_enterprise","企业信息");
+        tableAndDescs.put("t_organize","组织信息");
+        tableAndDescs.put("t_role","角色信息");
+        tableAndDescs.put("t_role_menu","角色和菜单关系信息");
+        tableAndDescs.put("t_user_role","用户和角色关系信息");
         return tableAndDescs;
     }
 

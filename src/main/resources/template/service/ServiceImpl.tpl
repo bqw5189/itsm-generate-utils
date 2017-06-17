@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
  *  <#$entity.entityName#>
  * Created by <#$auth#> on <#$date#>.
  */
+@Service
 @Getter
 public class <#$entity.entityClassName#>ServiceImpl extends CURDServiceBase<<#$entity.entityClassName#>> implements <#$entity.entityClassName#>Service {
     @Autowired

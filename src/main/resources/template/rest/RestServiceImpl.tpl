@@ -22,6 +22,7 @@ import javax.ws.rs.core.MediaType;
  * Created by <#$auth#> on <#$date#>.
  */
 @Api(value="<#$entity.path#>", description = "<#$entity.entityName#>接口")
+@Service(protocol = "rest")
 @Path("<#$entity.path#>")
 @Consumes({MediaType.APPLICATION_JSON})
 @Produces({ContentType.APPLICATION_JSON_UTF_8})
