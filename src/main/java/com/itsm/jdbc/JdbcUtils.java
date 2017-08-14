@@ -77,7 +77,7 @@ public abstract class JdbcUtils {
     protected abstract Field toField(ResultSet resultSet, String tableName);
 
     public  String toJavaType(String type) {
-        if (StringUtils.indexOf(type,"timestamp") > -1){
+        if (StringUtils.indexOf(type,"timestamp") > -1 || StringUtils.indexOf(type,"date") > -1){
             return "Date";
         }else if (StringUtils.indexOf(type,"tinyint") > -1){
             return "Boolean";
